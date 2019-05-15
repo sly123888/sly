@@ -1,0 +1,17 @@
+procedure TNew3d_.DecompressGZip(AInStream, AOutStream: TStream);
+var
+  pb1, pb2: byte;
+begin
+
+  AInStream.Seek(1, 0);
+  AInStream.Read(pb1, 1);
+  AInStream.Seek(2, 0);
+  AInStream.Read(pb2, 1);
+  AInStream.Position := 0;
+  AOutStream.Position := 0;
+  if (pb1 = $8B) and (pb2 = $8) then
+    ZDecompressStream2(AInStream, AOutStream, 47)
+
+  else
+    AOutStream.CopyFrom(AInStream, AInStream.Size);
+end;
